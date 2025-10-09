@@ -94,7 +94,7 @@ public:
 	}
 	MyVector operator--()
 	{
-		int* newArr = new int[size + 1];
+		int* newArr = new int[size - 1];
 
 		for (int i = 0; i < size; i++)
 		{
@@ -103,6 +103,72 @@ public:
 
 		arr = newArr;
 		size -= 1;
+
+		return *this;
+	}
+
+	operator int()
+	{
+		return size;
+	}
+	void operator() ()
+	{
+		for (size_t i = 0; i < size; i++)
+		{
+			cout << arr[i] << ", ";
+		}
+		cout << endl;
+	}
+	MyVector& operator+= (int b)
+	{
+		int* tempArr = new int[size + b];
+
+		for (int i = 0; i < size; i++)
+		{
+			tempArr[i] = arr[i];
+		}
+
+		for (int i = size; i < size + b; i++)
+		{
+			tempArr[i] = rand() % 50 + 1;
+		}
+
+		arr = tempArr;
+		size += b;
+
+		return *this;
+	}
+	MyVector& operator-= (int b)
+	{
+		int temp = size - b;
+
+		int* tempArr = new int[temp];
+
+		for (int i = 0; i < temp; i++)
+		{
+			tempArr[i] = arr[i];
+		}
+
+		arr = tempArr;
+		size -= b;
+
+		return *this;
+	}
+	MyVector& operator*= (int b)
+	{
+		for (int i = 0; i < size; i++)
+		{
+			arr[i] *= 5;
+		}
+
+		return *this;
+	}
+	MyVector& operator = (MyVector&& b)
+	{
+		arr = b.arr;
+		size = b.size;
+		b.arr = nullptr;
+		b.size = 0;
 
 		return *this;
 	}
@@ -119,35 +185,57 @@ int main()
 	//	cout << vec1[i] << ", ";
 	//}
 	//cout << endl;
-	cout << "Копирование: " << endl;
-	MyVector vec2 = vec1;
-	vec2.Print();
-	vec1.Print();
+	//cout << "Копирование: " << endl;
+	//MyVector vec2 = vec1;
+	//vec2.Print();
+	//vec1.Print();
 
-	cout << "Перенос: " << endl;
-	MyVector vec3 = move(vec2);
-	vec3.Print();
+	//cout << "Перенос: " << endl;
+	//MyVector vec3 = move(vec2);
+	//vec3.Print();
 
-	cout << "= с копированием: " << endl;
-	MyVector vec4(10), vec5(10), vec6(10);
-	vec4.Init();
-	vec5.Init();
-	vec6.Init();
+	//cout << "= с копированием: " << endl;
+	//MyVector vec4(10), vec5(10), vec6(10);
+	//vec4.Init();
+	//vec5.Init();
+	//vec6.Init();
 
-	vec4 = vec5 = vec6;
-	vec4.Print();
-	vec5.Print();
-	vec6.Print();
-	cout << "operator++" << endl;
-	MyVector vec7 = ++vec5;
-	vec7.Print();
-	vec5.Print();
+	//vec4 = vec5 = vec6;
+	//vec4.Print();
+	//vec5.Print();
+	//vec6.Print();
+	//cout << "operator++" << endl;
+	//MyVector vec7 = ++vec5;
+	//vec7.Print();
+	//vec5.Print();
 
-	cout << "operator--" << endl;
-	MyVector vec8 = --vec4;
-	vec8.Print();
-	vec4.Print();
+	//cout << "operator--" << endl;
+	//MyVector vec8 = --vec4;
+	//vec8.Print();
+	//vec4.Print();
+	//
+
+	cout << "Размер:" << endl;
+	int size = vec1;
+	cout << size << endl;
+	cout << "Вывод массива на консоль: " << endl;
+	vec1();
 	
+	cout << "+5: " << endl;
+	vec1 += 5;
+	vec1();
 
+	cout << "-5: " << endl;
+	vec1 -= 5;
+	vec1();
 
+	cout << "*5: " << endl;
+	vec1 *= 5;
+	vec1();
+
+	cout << "= " << endl;
+	MyVector vec2(10);
+	vec2.Init();
+	vec1 = move(vec2);
+	vec1();
 }
