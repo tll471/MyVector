@@ -96,9 +96,9 @@ public:
 	{
 		int* newArr = new int[size - 1];
 
-		for (int i = 0; i < size; i++)
+		for (int i = 1; i < size; i++)
 		{
-			newArr[i] = arr[i];
+			newArr[i - 1] = arr[i];
 		}
 
 		arr = newArr;
@@ -106,7 +106,7 @@ public:
 
 		return *this;
 	}
-
+	
 	operator int()
 	{
 		return size;
@@ -172,7 +172,20 @@ public:
 
 		return *this;
 	}
+
 };
+MyVector operator+(int a, MyVector& b)
+{
+	MyVector temp = b;
+	for (size_t i = 0; i < b.GetSize(); i++)
+	{
+		cout << temp[i] + a << ", ";
+	}
+	cout << endl;
+	return temp;
+}
+
+
 int main()
 {
 	srand(time(NULL));
@@ -221,7 +234,7 @@ int main()
 	cout << "Вывод массива на консоль: " << endl;
 	vec1();
 	
-	cout << "+5: " << endl;
+	/*cout << "+5: " << endl;
 	vec1 += 5;
 	vec1();
 
@@ -237,5 +250,12 @@ int main()
 	MyVector vec2(10);
 	vec2.Init();
 	vec1 = move(vec2);
-	vec1();
+	vec1();*/
+
+//дз до 14.10
+	cout << "e" << endl;
+	MyVector obj2 = 5+vec1 ;// к каждому элементу прибавить 5
+
+--obj2; // удаление первого элемента вектора, размер уменьшить на 1
+obj2.Print();
 }
