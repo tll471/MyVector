@@ -172,7 +172,10 @@ public:
 
 		return *this;
 	}
-
+	void AddA(int i, int a)
+	{
+		arr[i] = a;
+	}
 };
 MyVector operator+(int a, MyVector& b)
 {
@@ -185,6 +188,26 @@ MyVector operator+(int a, MyVector& b)
 	return temp;
 }
 
+ostream& operator<< (ostream& os, MyVector& obj)
+{
+	for (int i = 0; i < obj.GetSize(); i++)
+	{
+		os << obj[i];
+	}
+	return os;
+}
+istream& operator>> (istream& is, MyVector& obj)
+{
+	int i;
+	int a;
+	is >> a;
+	for (int i = 0; i < obj.GetSize(); i++)
+	{
+		is >> a;
+		obj.AddA(i, a);
+	}
+	return is;
+}
 
 int main()
 {
@@ -256,6 +279,12 @@ int main()
 	cout << "e" << endl;
 	MyVector obj2 = 5+vec1 ;// к каждому элементу прибавить 5
 
---obj2; // удаление первого элемента вектора, размер уменьшить на 1
-obj2.Print();
+	--obj2; // удаление первого элемента вектора, размер уменьшить на 1
+	obj2.Print();
+
+	cout << "Через cin " << endl;
+	cin >> obj2;
+
+	cout << "Через cout " << endl;
+	cout << obj2 << endl;
 }
