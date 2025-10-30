@@ -192,7 +192,7 @@ ostream& operator<< (ostream& os, MyVector& obj)
 {
 	for (int i = 0; i < obj.GetSize(); i++)
 	{
-		os << obj[i];
+		os << obj[i] << ", ";
 	}
 	return os;
 }
@@ -204,6 +204,19 @@ istream& operator>> (istream& is, MyVector& obj)
 	for (int i = 0; i < obj.GetSize(); i++)
 	{
 		is >> a;
+		try 
+		{
+			if (a < 0)
+			{
+				throw a;
+			}
+		}
+		catch (...)
+		{
+			cout << "Число отрицательное! " << endl;
+			break;
+		}
+		
 		obj.AddA(i, a);
 	}
 	return is;
@@ -253,6 +266,16 @@ int main()
 
 	cout << "Размер:" << endl;
 	int size = vec1;
+	try {
+		if (size <= 0)
+		{
+			throw size;
+		}
+	}
+	catch (...)
+	{
+		cout << "size <= 0" << endl;
+	}
 	cout << size << endl;
 	cout << "Вывод массива на консоль: " << endl;
 	vec1();
@@ -275,14 +298,32 @@ int main()
 	vec1 = move(vec2);
 	vec1();*/
 
-//дз до 14.10
-	cout << "e" << endl;
-	MyVector obj2 = 5+vec1 ;// к каждому элементу прибавить 5
 
-	--obj2; // удаление первого элемента вектора, размер уменьшить на 1
+	MyVector obj2 = 5+vec1 ;
+	cout << "к каждому элементу прибавить 5" << endl;
 	obj2.Print();
 
-	cout << "Через cin " << endl;
+	int number;
+	cout << "Введите число чтобы прибавить его к каждому элементу" << endl;
+	cin >> number;
+	try {
+		if (number < 0)
+		{
+			throw number;
+		}
+		obj2 = number + vec1;
+	}
+	catch (...)
+	{
+		cout << "Нельзя прибавить отрицательное число!" << endl;
+	}
+
+	cout << "--" << endl;
+	--obj2;
+	obj2.Print();
+
+	cout << "Только положительные!" << endl;
+	cout << "Через cin, введите числа" << endl;
 	cin >> obj2;
 
 	cout << "Через cout " << endl;
